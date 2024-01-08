@@ -1,0 +1,16 @@
+{
+  "name": "geradordepericias",
+  "version": "1.0.0",
+  "description": "paranormal order RPG system skill generator",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node index.cjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jimp": "^0.22.10"
+  }
+}
