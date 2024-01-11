@@ -1,8 +1,8 @@
 const Jimp = require('jimp');
 
-const inputImagePath = './imgs/pericias.jpg';
-const outputImagePath = './imgs/periciasOutput.jpg';
-const textArray = ['4', '2', '1', '4', '2']
+const inputImagePath = './imgs/periciasPNG.png';
+const outputImagePath = './imgs/periciasOutputPNG.png';
+const textArray = ['1', '2', '3', '4', '5']
 const coordinates = {
   coord1: {
     x: 58,
@@ -25,26 +25,35 @@ const coordinates = {
     y: 234,
   }
 }
-let isDarkMode = true;
+const whiteBg = 0xFFFFFFFF;
+let isDarkMode = false;
 
 async function main() {
   
   await Jimp.loadFont(Jimp.FONT_SANS_64_BLACK).then(font => {
     Jimp.read(inputImagePath)
-    .then(imageJpg => {
+    .then(image => {
+      const backgroundImg = new Jimp(
+        image.bitmap.width,
+        image.bitmap.height,
+        whiteBg
+      );
+      backgroundImg.composite(image, 0, 0);
 
       for(let i = 0; i < textArray.length; i++){
         const coord = coordinates[`coord${i + 1}`]
-        imageJpg.print(font, coord.x, coord.y, {
+        backgroundImg.print(font, coord.x, coord.y, {
           text: textArray[i]
         })
+        console.log(coord);
       }
+      
       if(isDarkMode){
-        imageJpg.invert()
-          .write(outputImagePath);
+        backgroundImg.invert()
       }
-      imageJpg.write(outputImagePath);
 
+      backgroundImg.write(outputImagePath);
+      console.log(outputImagePath);
     });
   });
 
